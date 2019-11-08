@@ -21,10 +21,10 @@ app
     logger.info(`Listening on port ${config.PORT}`)
   })
 
-async function store (date, ip, method, _path, header, bodyBuf) {
+async function store (date, ip, method, url, header, bodyBuf) {
   const fileName = `req-${date.replace(/:|\./g, '-')}`
   const filePath = path.join(config.REQ_LOGS, fileName)
-  const head = JSON.stringify({ date, ip, method, path: _path, header }, null, 2) +
+  const head = JSON.stringify({ date, ip, method, path: url, header }, null, 2) +
     '\n\n--------------\n'
 
   await appendFile(filePath, head)
@@ -36,7 +36,7 @@ async function track (ctx) {
   const date = new Date().toISOString()
   const ip = ctx.ip
   const method = ctx.method
-  const path = ctx.url
+  const url = ctx.url
 
   try {
     bodyBuf = await getRawBody(ctx.req, { limit: '10mb' })
@@ -47,7 +47,7 @@ async function track (ctx) {
   }
 
   try {
-    await store(date, ip, method, path, ctx.request.header, bodyBuf)
+    await store(date, ip, method, url, ctx.request.header, bodyBuf)
   } catch (err) {
     logger.err('Could not store request', err, ctx.request)
     ctx.status = 500
@@ -55,7 +55,7 @@ async function track (ctx) {
   }
 
   // Access log for overview
-  logger.info(`${date} - [${ip}] ${method} ${path}`)
+  logger.info(`${date} - [${ip}] ${method} ${url}`)
 
   ctx.status = 200
   ctx.body = 'OK'
