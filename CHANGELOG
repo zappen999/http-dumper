@@ -11,6 +11,12 @@ Sections: Added, Changed, Deprecated, Removed, Fixed, Security.
 UNRELEASED
 
 
+0.1.1 - 2019-11-08
+
+Fixed:
+- Variable shadowing.
+
+
 0.1.0 - 2019-11-08
 
 Added:
