@@ -1,0 +1,12 @@
+HTTP-DUMPER
+
+Logs HTTP requests to file for debugging purposes.
+
+Outputs simple access log to stdout, logs the entire HTTP request into files,
+located at ./requests by default
+
+docker build -t http-dumper .
+docker run -p 80:8080 --name http-dumper http-dumper:latest
+
+Alternatively:
+docker-compose up

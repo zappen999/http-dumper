@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      PORT: 8080
+    volumes:
+      - ./src:/home/node/app/src
+      - ./requests:/home/node/app/requests
+    ports:
+      - 8080:8080
