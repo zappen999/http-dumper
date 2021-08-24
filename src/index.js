@@ -9,6 +9,7 @@ const config = require('./config')
 const appendFile = util.promisify(fs.appendFile)
 
 const app = new Koa()
+app.proxy = config.BEHIND_PROXY
 
 app
   .use(track)
